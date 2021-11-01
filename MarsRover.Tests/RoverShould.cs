@@ -8,29 +8,24 @@ namespace MarsRover.Tests
        [Test]
         public void Initialize()
         {
-            // arrange
-            var rover = new Rover(0,0,'N');
+            var rover = new Rover("0 0 N");
 
             rover.ToString().Should().Be("0 0 N");
         }
-    }
 
-    public class Rover
-    {
-        public int X { get; }
-        public int Y { get; }
-        public char Direction { get; }
-
-        public Rover(int x, int y, char direction)
+        [TestCase("0 0 N","M", "0 1 N")]
+        [TestCase("0 0 E","M", "1 0 E")]
+        [TestCase("0 0 E","R", "0 0 S")]
+        [TestCase("0 0 E","L", "0 0 N")]
+        [TestCase("1 2 N","LMLMLMLMM", "1 3 N")]
+        [TestCase("3 3 E","MMRMMRMRRM", "5 1 E")]
+        public void Be_Controlled_By_Commands(string initialState,string commands, string expected)
         {
-            X = x;
-            Y = y;
-            Direction = direction;
-        }
+            var rover = new Rover(initialState);
 
-        public override string ToString()
-        {
-            return $"{X} {Y} {Direction}";
+            rover.Control(commands);
+
+            rover.ToString().Should().Be(expected);
         }
     }
 }
