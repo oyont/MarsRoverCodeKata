@@ -9,8 +9,9 @@ namespace MarsRover.Tests
         public void Initialize()
         {
             var rover = new Rover("0 0 N");
+            var result = rover.Control("");
 
-            rover.ToString().Should().Be("0 0 N");
+            result.Should().Be("0 0 N"); 
         }
 
         [TestCase("0 0 N","M", "0 1 N")]
@@ -23,9 +24,9 @@ namespace MarsRover.Tests
         {
             var rover = new Rover(initialState);
 
-            rover.Control(commands);
+            var result = rover.Control(commands);
 
-            rover.ToString().Should().Be(expected);
+            result.Should().Be(expected);
         }
     }
 }
