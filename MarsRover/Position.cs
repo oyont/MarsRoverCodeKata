@@ -1,6 +1,6 @@
 namespace MarsRover
 {
-    public partial class Position
+    public  class Position
     {
         public Position(int x, int y)
         {
@@ -11,5 +11,18 @@ namespace MarsRover
         public int X { get; set; }
         public int Y { get; set; }
  
+        public override bool Equals( object ob ){
+            if( ob is Position ) {
+                Position c = (Position) ob;
+                return X==c.X && Y==c.Y;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public override int GetHashCode(){
+            return X.GetHashCode() ^ Y.GetHashCode();
+        }
     }
 }

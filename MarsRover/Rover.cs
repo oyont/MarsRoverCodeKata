@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using MarsRover.Directions;
 
 namespace MarsRover
@@ -16,13 +18,26 @@ namespace MarsRover
             Direction = DirectionFactory.CreateDirection(coordinates[2]);
         }
 
-        public string Control(string commands)
+        public string Control(string commands, Plateau plateau)
         {
             foreach (var command in commands)
             {
                 if (command == 'M')
                 {
-                    Move();
+                    var lastPosition = Position;
+                    if (!plateau.Beacons.Any(
+                        beacon=> beacon.Position.X == lastPosition.X &&
+                                 beacon.Position.Y == lastPosition.Y &&
+                                 beacon.Direction.CompassPoint == Direction.CompassPoint))
+                    {
+                        Move();
+                    }
+                    
+                    if (Position.X > plateau.UpperX || Position.Y > plateau.UpperY)
+                    {
+                        plateau.Beacons.Add(new Beacon(lastPosition,Direction));
+                        return $"{lastPosition.X} {lastPosition.Y} {Direction.CompassPoint} RIP";
+                    }
                 }
                 else if (command == 'R')
                 {
@@ -51,5 +66,30 @@ namespace MarsRover
         {
             Position = Direction.Move(Position);
         }
+    }
+
+    public class Plateau
+    {
+        public Plateau(int upperX, int upperY)
+        {
+            UpperX = upperX;
+            UpperY = upperY;
+        }
+
+        public int UpperX { get; }
+        public int UpperY { get; }
+        public List<Beacon> Beacons { get; } = new();
+    }
+
+    public class Beacon
+    {
+        public Position Position { get; }
+        public IDirection Direction { get; }
+
+        public Beacon(Position position, IDirection direction)
+        {
+            Position = position;
+            Direction = direction;
+        } 
     }
 }
