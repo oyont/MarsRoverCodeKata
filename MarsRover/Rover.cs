@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using MarsRover.Directions;
 
@@ -25,10 +24,7 @@ namespace MarsRover
                 if (command == 'M')
                 {
                     var lastPosition = Position;
-                    if (!plateau.Beacons.Any(
-                        beacon=> beacon.Position.X == lastPosition.X &&
-                                 beacon.Position.Y == lastPosition.Y &&
-                                 beacon.Direction.CompassPoint == Direction.CompassPoint))
+                    if (plateau.HasBeaconAtPosition(lastPosition,Direction))
                     {
                         Move();
                     }
@@ -52,6 +48,8 @@ namespace MarsRover
             return $"{Position.X} {Position.Y} {Direction.CompassPoint}";
         }
 
+
+
         private void TurnRight()
         {
             Direction = Direction.TurnRight();
@@ -66,30 +64,5 @@ namespace MarsRover
         {
             Position = Direction.Move(Position);
         }
-    }
-
-    public class Plateau
-    {
-        public Plateau(int upperX, int upperY)
-        {
-            UpperX = upperX;
-            UpperY = upperY;
-        }
-
-        public int UpperX { get; }
-        public int UpperY { get; }
-        public List<Beacon> Beacons { get; } = new();
-    }
-
-    public class Beacon
-    {
-        public Position Position { get; }
-        public IDirection Direction { get; }
-
-        public Beacon(Position position, IDirection direction)
-        {
-            Position = position;
-            Direction = direction;
-        } 
     }
 }

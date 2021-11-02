@@ -10,7 +10,7 @@ namespace MarsRover
 
         public int X { get; set; }
         public int Y { get; set; }
- 
+        
         public override bool Equals( object ob ){
             if( ob is Position ) {
                 Position c = (Position) ob;
