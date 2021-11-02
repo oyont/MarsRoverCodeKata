@@ -19,7 +19,7 @@ namespace MarsRover
         public bool HasBeaconAtPosition(Position lastPosition, IDirection direction)
         {
             return !Beacons.Any(
-                beacon=> Equals(beacon.Position, lastPosition) && Equals(beacon.Direction, direction));
+                beacon=> beacon.Position == lastPosition && Equals(beacon.Direction, direction));
         }
     }
 }
