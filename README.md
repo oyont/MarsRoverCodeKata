@@ -31,7 +31,7 @@ LMLMLMLMM
 
 MMRMMRMRRM
 
-Expected Output: 
+### Expected Output: 
 
 1 3 N
 
@@ -56,7 +56,7 @@ MMRMMLMRRM
 
 MLMLMRMRM
 
-Expected Output:
+### Expected Output:
 
 1 3 N
 
